@@ -2,7 +2,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 
-namespace SonjaEditor;
+namespace FlatboxEditor;
 
 class Program
 {

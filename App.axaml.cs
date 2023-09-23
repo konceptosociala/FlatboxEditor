@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using SonjaEditor.MVVM.ViewModels;
-using SonjaEditor.MVVM.Views;
+using FlatboxEditor.MVVM.ViewModels;
+using FlatboxEditor.MVVM.Views;
 
-namespace SonjaEditor;
+namespace FlatboxEditor;
 
 public partial class App : Application
 {

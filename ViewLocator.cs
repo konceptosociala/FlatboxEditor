@@ -1,9 +1,9 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using SonjaEditor.MVVM.ViewModels;
+using FlatboxEditor.MVVM.ViewModels;
 
-namespace SonjaEditor;
+namespace FlatboxEditor;
 
 public class ViewLocator : IDataTemplate
 {

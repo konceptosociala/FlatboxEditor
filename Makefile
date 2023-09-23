@@ -4,18 +4,18 @@ else
 	EXT = so
 endif
 
-FFI = target/release/libeditorffi.$(EXT)
+FFI = target/release/libnative.$(EXT)
 DESTDIR = /usr/bin/
 
 all : clean build
 
 build:
 	mkdir build -p
-	cd SonjaEditor.FFI/lib/ && cargo build --release && cp $(FFI) ../../build/
+	cd FlatboxEditor.FFI/lib/ && cargo build --release && cp $(FFI) ../../build/
 	dotnet build -o build/
 
 run: build
-	./build/SonjaEditor
+	./build/FlatboxEditor
 
 clean:
 	rm -rf build/
@@ -23,4 +23,4 @@ clean:
 	rm -rf bin/
 
 purge: clean
-	cd SonjaEditor.FFI/lib/ && cargo clean
+	cd FlatboxEditor.FFI/lib/ && cargo clean
