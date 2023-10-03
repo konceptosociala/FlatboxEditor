@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace FlatboxEditor.MVVM.Views;
 
-public partial class MainWindow : Window
+public partial class EditorView : UserControl
 {
-    public MainWindow()
+    public EditorView()
     {
         InitializeComponent();
     }

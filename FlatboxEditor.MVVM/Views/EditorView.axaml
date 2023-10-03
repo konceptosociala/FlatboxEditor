@@ -1,0 +1,71 @@
+<UserControl 
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="using:FlatboxEditor.MVVM.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:FlatboxEditor"
+    xmlns:render="clr-namespace:FlatboxEditor.Render"
+    x:Class="FlatboxEditor.MVVM.Views.EditorView"
+    x:DataType="vm:EditorViewModel"
+>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open..."/>
+                <Separator/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+            </MenuItem>
+        </Menu>
+        <TextBlock/>
+        <Grid ColumnDefinitions="64, *, 0.1, 0.2*">
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <Button Classes="FlatButton" Height="64" Width="64">
+                    <PathIcon Height="32" Width="32" Foreground="{DynamicResource SystemAccentColor}" Data="{StaticResource CursorRegular}"/>
+                </Button>
+                <Button Classes="FlatButton" Height="64" Width="64">
+                    <PathIcon Height="32" Width="32" Foreground="{DynamicResource SystemAccentColor}" Data="{StaticResource CubeRegular}"/>
+                </Button>
+                <Button Classes="FlatButton" Height="64" Width="64">
+                    <PathIcon Height="32" Width="32" Foreground="{DynamicResource SystemAccentColor}" Data="{StaticResource PaintBucketRegular}"/>
+                </Button>
+                <Button Classes="FlatButton" Height="64" Width="64">
+                    <PathIcon Height="32" Width="32" Foreground="{DynamicResource SystemAccentColor}" Data="{StaticResource PersonRegular}"/>
+                </Button>
+                <Button Classes="FlatButton" Height="64" Width="64">
+                    <PathIcon Height="32" Width="32" Foreground="{DynamicResource SystemAccentColor}" Data="{StaticResource CameraRegular}"/>
+                </Button>
+            </StackPanel>
+            <Grid Grid.Column="1" RowDefinitions="48, *, 0.1, 0.3*">
+                <StackPanel Classes="ButtonGroup" Grid.Row="0">
+                    
+                </StackPanel>
+
+                <render:Editor3D Grid.Row="1"/>
+
+                <GridSplitter Grid.Row="2" Background="{DynamicResource SystemRegionColor}" ResizeDirection="Rows"/>
+                <TabControl Grid.Row="3">
+                    <TabItem Header="Asset manager" VerticalContentAlignment="Center">
+                        <TextBlock Text="Asset manager tab" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </TabItem>
+                    <TabItem Header="Animator" VerticalContentAlignment="Center">
+                        <TextBlock Text="Animator tab" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </TabItem>
+                    <TabItem Header="Material" VerticalContentAlignment="Center">
+                        <TextBlock Text="Material tab" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+            <GridSplitter Grid.Column="2" Background="{DynamicResource SystemRegionColor}" ResizeDirection="Columns"/>
+            <Grid Grid.Column="3" RowDefinitions="*, 0.1, *">
+                <Rectangle Fill="{DynamicResource SystemRegionColor}" Grid.Row="0"/>
+                <GridSplitter Grid.Row="1" Background="{DynamicResource SystemRegionColor}" ResizeDirection="Rows"/>
+                <Rectangle Fill="{DynamicResource SystemRegionColor}" Grid.Row="2"/>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</UserControl>

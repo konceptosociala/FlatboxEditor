@@ -7,14 +7,8 @@
     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
     x:Class="FlatboxEditor.MVVM.Views.MainWindow"
     x:DataType="vm:MainWindowViewModel"
-    Icon="/Assets/avalonia-logo.ico"
+    Content="{Binding ContentViewModel}"
     Title="Flatbox Editor"
->
-
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-</Window>
+    Icon="/Assets/icons/favicon.ico"
+    WindowState="Maximized"
+></Window>

@@ -1,6 +1,21 @@
-﻿namespace FlatboxEditor.MVVM.ViewModels;
+﻿using FlatboxEditor.FFI;
+using ReactiveUI;
 
-public class MainWindowViewModel : ViewModelBase
+namespace FlatboxEditor.MVVM.ViewModels;
+
+public class MainWindowViewModel : ViewModelBase 
 {
-    public string Greeting => "Welcome to Avalonia!";
+    private ViewModelBase _contentViewModel;
+
+    public ViewModelBase ContentViewModel {
+        get => _contentViewModel;
+        private set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
+    }
+
+    public EditorViewModel Editor;
+
+    public MainWindowViewModel(){
+        Editor = new EditorViewModel();
+        _contentViewModel = Editor;
+    }
 }
