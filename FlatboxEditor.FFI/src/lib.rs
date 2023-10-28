@@ -5,7 +5,7 @@ pub use render::*;
 use std::ffi::*;
 
 #[no_mangle]
-pub extern "C" fn init_gl(mut init_function: extern fn(*const c_char) -> *const c_void) {
+pub extern "C" fn init_gl(init_function: extern fn(*const c_char) -> *const c_void) {
     gl::load_with(|ptr| {
         let cstring = CString::new(ptr).unwrap();
         let ptr = cstring.as_ptr() as *const _;

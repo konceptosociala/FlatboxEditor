@@ -11,7 +11,7 @@ all : clean build
 
 build:
 	mkdir build -p
-	cd FlatboxEditor.FFI/lib/ && cargo build --release && cp $(FFI) ../../build/
+	cd FlatboxEditor.FFI/ && cargo build --release && cp $(FFI) ../build/
 	dotnet build -o build/
 
 run: build
@@ -23,4 +23,4 @@ clean:
 	rm -rf bin/
 
 purge: clean
-	cd FlatboxEditor.FFI/lib/ && cargo clean
+	cd FlatboxEditor.FFI/ && cargo clean
