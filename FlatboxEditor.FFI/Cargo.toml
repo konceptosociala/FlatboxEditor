@@ -4,7 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-gl = "0.14"
+flatbox_assets = { path = "../../flatbox/crates/assets" }
+flatbox_render = { path = "../../flatbox/crates/render", default-features = false, features = ["ecs"] }
+flatbox_core = { path = "../../flatbox/crates/core" }
 
 [lib]
 name = "native"

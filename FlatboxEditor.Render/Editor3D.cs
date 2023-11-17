@@ -1,31 +1,24 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using Avalonia.OpenGL;
+﻿using Avalonia.OpenGL;
 using Avalonia.OpenGL.Controls;
 using Avalonia.Threading;
 using FlatboxEditor.FFI;
+using FlatboxEditor.Scenes;
 
 namespace FlatboxEditor.Render;
 
 public class Editor3D : OpenGlControlBase
 {
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate IntPtr CallbackDelegate(string glFunctionName);
-    [DllImport(Libs.Native)]
-    private static extern void init_gl(CallbackDelegate callback);
-    [DllImport(Libs.Native)]
-    private static extern void render_gl();
+    private Renderer? renderer;
+    private Camera? camera;
+    private Scene? scene;
 
     protected override void OnOpenGlInit(GlInterface gl)
     {
         base.OnOpenGlInit(gl);
 
-        CallbackDelegate initGlFunction = (string glFunctionName) => {
-            Console.WriteLine(glFunctionName);
-            return gl.GetProcAddress(glFunctionName);
-        };
-
-        init_gl(initGlFunction);
+        renderer = new Renderer(gl);
+        camera = new Camera();
+        scene = new Scene();
     }
 
     protected override void OnOpenGlDeinit(GlInterface gl)
@@ -35,7 +28,12 @@ public class Editor3D : OpenGlControlBase
 
     protected override void OnOpenGlRender(GlInterface gl, int fb)
     {
-        render_gl();
+        if (renderer is null || camera is null || scene is null)
+            return;
+
+        renderer.Clear(0.5f, 0.5f, 1.0f);
+        renderer.BindCamera(camera);
+        renderer.RenderScene(scene);
 
         Dispatcher.UIThread.Post(RequestNextFrameRendering, DispatcherPriority.Background);
     }
