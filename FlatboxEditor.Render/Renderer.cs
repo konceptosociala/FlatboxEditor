@@ -26,7 +26,7 @@ internal class RendererHandle : SafeHandle
 
 public class Renderer : IDisposable
 {
-    private RendererHandle renderer;
+    private readonly RendererHandle renderer;
 
     public Renderer(GlInterface gl)
     {

@@ -4,14 +4,14 @@ else
 	EXT = so
 endif
 
-FFI = target/release/libnative.$(EXT)
+FFI = target/debug/libnative.$(EXT)
 DESTDIR = /usr/bin/
 
 all : clean build
 
 build:
 	mkdir build -p
-	cd FlatboxEditor.FFI/ && cargo build --release && cp $(FFI) ../build/
+	cd FlatboxEditor.FFI/ && cargo build && cp $(FFI) ../build/
 	dotnet build -o build/
 
 run: build

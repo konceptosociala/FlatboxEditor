@@ -7,6 +7,7 @@ edition = "2021"
 flatbox_assets = { path = "../../flatbox/crates/assets" }
 flatbox_render = { path = "../../flatbox/crates/render", default-features = false, features = ["ecs"] }
 flatbox_core = { path = "../../flatbox/crates/core" }
+gl = "0.14.0"
 
 [lib]
 name = "native"

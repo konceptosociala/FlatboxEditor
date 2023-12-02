@@ -2,6 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Avalonia.OpenGL;
 using FlatboxEditor.FFI;
+using FlatboxEditor.Render;
 
 namespace FlatboxEditor.Scenes;
 
@@ -35,6 +36,10 @@ public class Scene : IDisposable
     public Scene(string path)
     {
         scene = Native.scene_open(path);
+    }
+
+    public void AddModel(Model model) {
+        Native.scene_add_model(scene, model.model);
     }
 
     public void Save(string path)

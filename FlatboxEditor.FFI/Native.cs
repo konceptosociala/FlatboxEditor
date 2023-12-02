@@ -30,10 +30,33 @@ internal class Native
     [DllImport(LibPath)]
     internal static extern void scene_save(SceneHandle scene, string path);
     [DllImport(LibPath)]
+    internal static extern void scene_add_model(SceneHandle scene, ModelHandle model);
+    [DllImport(LibPath)]
     internal static extern void scene_free(IntPtr scene);
 
     [DllImport(LibPath)]
     internal static extern CameraHandle camera_new();
     [DllImport(LibPath)]
     internal static extern void camera_free(IntPtr renderer);
+
+    [DllImport(LibPath)]
+    internal static extern void logger_init();
+    [DllImport(LibPath)]
+    internal static extern void logger_info(string msg);
+    [DllImport(LibPath)]
+    internal static extern void logger_warn(string msg);
+    [DllImport(LibPath)]
+    internal static extern void logger_error(string msg);
+    [DllImport(LibPath)]
+    internal static extern void logger_debug(string msg);
+
+    [DllImport(LibPath)]
+    internal static extern ModelHandle model_cube();
+    [DllImport(LibPath)]
+    internal static extern void model_free(IntPtr Model);
+
+    [DllImport(LibPath)]
+    internal static extern void opengl_init(CallbackDelegate initGlFunction);
+    [DllImport(LibPath)]
+    internal static extern void opengl_render();
 }

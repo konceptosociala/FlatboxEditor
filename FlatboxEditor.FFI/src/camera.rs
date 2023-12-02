@@ -1,5 +1,13 @@
-use flatbox_render::pbr::camera::Camera as FlatboxCamera;
-use flatbox_core::math::transform::Transform;
+use flatbox_render::pbr::camera::{
+    Camera as FlatboxCamera, 
+    CameraType
+};
+use flatbox_core::math::{
+    transform::Transform, 
+    glm
+};
+
+use crate::free_ptr;
 
 pub struct Camera {
     pub inner: FlatboxCamera,
@@ -9,8 +17,20 @@ pub struct Camera {
 impl Default for Camera {
     fn default() -> Self {
         Camera {
-            inner: FlatboxCamera::builder().is_active(true).build(),
-            transform: Transform::identity(),
+            inner: FlatboxCamera::builder()
+                .camera_type(CameraType::FirstPerson)
+                .is_active(true)
+                .build(),
+            transform: Transform {
+                translation: glm::vec3(3.0, -3.0, 3.0),
+                rotation: glm::safe_quat_look_at(
+                    &glm::vec3(0.0, 0.0, 0.0), 
+                    &glm::vec3(3.0, -3.0, 3.0),
+                    &glm::Vec3::y_axis(), 
+                    &glm::Vec3::y_axis(),
+                ),
+                scale: 1.0,
+            },
         }
     }
 }
@@ -25,9 +45,5 @@ pub extern "C" fn camera_new() -> *mut Camera {
 /// `camera` must be a valid `Renderer` pointer
 #[no_mangle]
 pub unsafe extern "C" fn camera_free(camera: *mut Camera) {
-    if camera.is_null() {
-        return;
-    }
-    
-    let _ = Box::from_raw(camera);
+    free_ptr(camera);
 }
