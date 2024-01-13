@@ -38,7 +38,7 @@ public class Model : IDisposable
     {
         model = type switch {
             MeshType.Cube => Native.model_cube(),
-            _ => throw new Exception("Non cube models are not supported"),
+            _ => throw new Exception("Non cube models are not supported yet"),
         };
     }
 

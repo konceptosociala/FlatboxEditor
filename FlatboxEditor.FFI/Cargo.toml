@@ -1,3 +1,4 @@
+workspace = { members = ["native_macro"] }
 [package]
 name = "native"
 version = "0.1.0"
@@ -8,6 +9,9 @@ flatbox_assets = { path = "../../flatbox/crates/assets" }
 flatbox_render = { path = "../../flatbox/crates/render", default-features = false, features = ["ecs"] }
 flatbox_core = { path = "../../flatbox/crates/core" }
 gl = "0.14.0"
+serde = { version = "1.0.188", features = ["derive", "rc"] }
+
+native_macro = { path = "native_macro" }
 
 [lib]
 name = "native"

@@ -42,9 +42,19 @@ public class Renderer : IDisposable
         Native.renderer_render_scene(renderer, scene.scene);
     }
 
+    public void RenderGrid(Grid grid)
+    {
+        Native.renderer_render_grid(renderer, grid.grid);
+    }
+
     public void BindCamera(Camera camera)
     {
         Native.renderer_bind_camera(renderer, camera.camera);
+    }
+
+    public void BindCameraGrid(Camera camera)
+    {
+        Native.renderer_bind_camera_grid(renderer, camera.camera);
     }
 
     public void Clear(float r, float g, float b) 

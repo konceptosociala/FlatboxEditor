@@ -12,7 +12,8 @@ use flatbox_render::{
     },
 };
 
-use crate::{Camera, assert_ptr_mut, free_ptr};
+use crate::{editor::camera::Camera, Grid, DrawGridCommand, GridMaterial};
+use crate::{assert_ptr_mut, free_ptr};
 
 pub type GlInitFunctionFFI = extern fn(*const c_char) -> *const c_void;
 
@@ -25,6 +26,7 @@ pub extern "C" fn renderer_init(init_function: GlInitFunctionFFI) -> *mut Render
     });
 
     renderer.bind_material::<DefaultMaterial>();
+    renderer.bind_material::<GridMaterial>();
 
     debug!("Renderer::init()");
     Box::into_raw(Box::new(renderer))
@@ -60,7 +62,7 @@ pub unsafe extern "C" fn renderer_render_scene(renderer: *mut Renderer, scene: *
             )).catch();
 
             renderer.execute(&mut DrawModelCommand::new(
-                model.as_any_mut().downcast_mut::<Model>().unwrap(), 
+                model.as_any().downcast_ref::<Model>().unwrap(), 
                 material.as_any().downcast_ref::<DefaultMaterial>().unwrap(), 
                 transform.as_any().downcast_ref::<Transform>().unwrap(),
             )).catch();
@@ -71,7 +73,20 @@ pub unsafe extern "C" fn renderer_render_scene(renderer: *mut Renderer, scene: *
 
 /// # Safety
 /// `renderer` must be a valid `Renderer` pointer
-/// `scene`  must be a valid `Renderer` pointer
+/// `grid`  must be a valid `Grid` pointer
+#[no_mangle]
+pub unsafe extern "C" fn renderer_render_grid(renderer: *mut Renderer, grid: *mut Grid) {
+    let renderer = assert_ptr_mut(renderer);
+    let grid = assert_ptr_mut(grid);
+
+    renderer.execute(&mut DrawGridCommand::new(grid)).catch();
+
+    debug!("Renderer::render_grid()");
+}
+
+/// # Safety
+/// `renderer` must be a valid `Renderer` pointer
+/// `camear`  must be a valid `Camera` pointer
 #[no_mangle]
 pub unsafe extern "C" fn renderer_bind_camera(renderer: *mut Renderer, camera: *mut Camera) {
     let renderer = assert_ptr_mut(renderer);
@@ -79,6 +94,18 @@ pub unsafe extern "C" fn renderer_bind_camera(renderer: *mut Renderer, camera: *
 
     renderer.execute(&mut RenderCameraCommand::<DefaultMaterial>::new(&mut camera.inner, &camera.transform)).catch();
     debug!("Renderer::bind_camera()");
+}
+
+/// # Safety
+/// `renderer` must be a valid `Renderer` pointer
+/// `camear`  must be a valid `Camera` pointer
+#[no_mangle]
+pub unsafe extern "C" fn renderer_bind_camera_grid(renderer: *mut Renderer, camera: *mut Camera) {
+    let renderer = assert_ptr_mut(renderer);
+    let camera = assert_ptr_mut(camera);
+
+    renderer.execute(&mut RenderCameraCommand::<GridMaterial>::new(&mut camera.inner, &camera.transform)).catch();
+    debug!("Renderer::bind_camera_grid()");
 }
 
 ///

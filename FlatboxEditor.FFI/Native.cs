@@ -17,7 +17,11 @@ internal class Native
     [DllImport(LibPath)]
     internal static extern void renderer_render_scene(RendererHandle renderer, SceneHandle scene);
     [DllImport(LibPath)]
+    internal static extern void renderer_render_grid(RendererHandle renderer, GridHandle grid);
+    [DllImport(LibPath)]
     internal static extern void renderer_bind_camera(RendererHandle renderer, CameraHandle camera);
+    [DllImport(LibPath)]
+    internal static extern void renderer_bind_camera_grid(RendererHandle renderer, CameraHandle camera);
     [DllImport(LibPath)]
     internal static extern void renderer_clear(RendererHandle renderer, float r, float g, float b);
     [DllImport(LibPath)]
@@ -53,10 +57,10 @@ internal class Native
     [DllImport(LibPath)]
     internal static extern ModelHandle model_cube();
     [DllImport(LibPath)]
-    internal static extern void model_free(IntPtr Model);
+    internal static extern void model_free(IntPtr model);
 
     [DllImport(LibPath)]
-    internal static extern void opengl_init(CallbackDelegate initGlFunction);
+    internal static extern GridHandle grid_new(uint width, uint height, uint resolution, Color color);
     [DllImport(LibPath)]
-    internal static extern void opengl_render();
+    internal static extern void grid_free(IntPtr grid);
 }

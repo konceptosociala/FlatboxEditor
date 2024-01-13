@@ -1,10 +1,10 @@
 use flatbox_render::pbr::camera::{
     Camera as FlatboxCamera, 
-    CameraType
+    CameraType,
 };
 use flatbox_core::math::{
     transform::Transform, 
-    glm
+    glm,
 };
 
 use crate::free_ptr;
@@ -42,7 +42,7 @@ pub extern "C" fn camera_new() -> *mut Camera {
 
 ///
 /// # Safety
-/// `camera` must be a valid `Renderer` pointer
+/// `camera` must be a valid `Camera` pointer
 #[no_mangle]
 pub unsafe extern "C" fn camera_free(camera: *mut Camera) {
     free_ptr(camera);

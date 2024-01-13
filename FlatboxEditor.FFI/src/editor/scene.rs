@@ -1,7 +1,7 @@
 use std::ffi::c_char;
 use flatbox_core::{logger::{error, debug}, math::transform::Transform};
 use flatbox_assets::{ron, scene::{Scene, SerializableEntity}, entity};
-use flatbox_render::pbr::{material::DefaultMaterial, model::Model, texture::Texture};
+use flatbox_render::{pbr::{material::DefaultMaterial, model::Model, texture::Texture}, include_texture};
 
 use crate::{assert_ptr_mut, assert_ptr, ptr_to_string, free_ptr};
 
@@ -45,20 +45,8 @@ pub unsafe extern "C" fn scene_add_model(scene: *mut Scene, model: *const Model)
     scene.entities.push(entity![
         Transform::identity(),
         DefaultMaterial {
-            diffuse_map: match Texture::new("/tmp/crate.png", None) {
-                Ok(t) => t,
-                Err(e) => {
-                    error!("Cannot create texture `/tmp/crate.png`: {e}");
-                    return;
-                },
-            },
-            specular_map: match Texture::new("/tmp/crate_spec.png", None) {
-                Ok(t) => t,
-                Err(e) => {
-                    error!("Cannot create texture `/tmp/crate_spec.png`: {e}");
-                    return;
-                },
-            },
+            diffuse_map: include_texture!("../assets/textures/dev.png"),
+            specular_map: Texture::default(),
             ..Default::default()
         },
         model.clone()

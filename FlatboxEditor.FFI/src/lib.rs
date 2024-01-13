@@ -1,18 +1,11 @@
-pub mod camera;
+pub mod editor;
 pub mod logger;
-pub mod model;
-pub mod render;
-pub mod scene;
 
-pub mod opengl;
 
 use std::ffi::{CStr, c_char};
 
-pub use camera::*;
 pub use logger::*;
-pub use model::*;
-pub use render::*;
-pub use scene::*;
+pub use editor::*;
 
 ///
 /// # Safety
