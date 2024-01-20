@@ -6,12 +6,18 @@ use flatbox_core::math::{
     transform::Transform, 
     glm,
 };
-
-use crate::free_ptr;
+use native_macro::native;
 
 pub struct Camera {
     pub inner: FlatboxCamera,
     pub transform: Transform,
+}
+
+#[native]
+impl Camera {
+    pub fn new() -> Camera {
+        Camera::default()
+    }
 }
 
 impl Default for Camera {
@@ -33,17 +39,4 @@ impl Default for Camera {
             },
         }
     }
-}
-
-#[no_mangle]
-pub extern "C" fn camera_new() -> *mut Camera {
-    Box::into_raw(Box::default())
-}
-
-///
-/// # Safety
-/// `camera` must be a valid `Camera` pointer
-#[no_mangle]
-pub unsafe extern "C" fn camera_free(camera: *mut Camera) {
-    free_ptr(camera);
 }

@@ -1,12 +1,17 @@
 use std::ffi::c_char;
 use flatbox_core::logger::{FlatboxLogger, warn, info, error, debug};
+use native_macro::native;
 
 use crate::ptr_to_string;
 
-#[no_mangle]
-pub extern "C" fn logger_init() {
-    FlatboxLogger::init();
-    debug!("Logger::init()");
+pub struct Logger;
+
+#[native]
+impl Logger {
+    pub fn init() {
+        FlatboxLogger::init();
+        debug!("Logger::init()");
+    }
 }
 
 ///
