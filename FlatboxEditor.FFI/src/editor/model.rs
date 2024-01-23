@@ -2,7 +2,7 @@ use flatbox_core::logger::debug;
 use flatbox_render::pbr::model::Model as NativeModel;
 use native_macro::native;
 
-pub struct Model(NativeModel);
+pub struct Model(pub NativeModel);
 
 #[native]
 impl Model {

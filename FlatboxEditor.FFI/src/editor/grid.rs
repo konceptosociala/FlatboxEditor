@@ -1,3 +1,4 @@
+use native_macro::native;
 use serde::{Serialize, Deserialize};
 use flatbox_core::{
     math::{transform::Transform, glm},
@@ -18,7 +19,7 @@ use flatbox_render::{
 };
 use flatbox_assets::typetag;
 
-use crate::{free_ptr, NativeColor};
+use crate::NativeColor;
 
 #[derive(Default, Debug, Clone)]
 pub struct Grid {
@@ -27,22 +28,11 @@ pub struct Grid {
     transform: Transform,
 }
 
-#[no_mangle]
-pub extern "C" fn grid_new(
-    _width: u32, 
-    _height: u32, 
-    _resolution: u32,
-    _color: NativeColor,
-) -> *mut Grid {
-    Box::into_raw(Box::default())
-}
-
-///
-/// # Safety
-/// `grid` must be a valid `Grid` pointer
-#[no_mangle]
-pub unsafe extern "C" fn grid_free(grid: *mut Grid) {
-    free_ptr(grid);
+#[native]
+impl Grid {
+    pub fn new(_width: u32, _height: u32, _resolution: u32, _color: NativeColor) -> Grid {
+        Grid::default()
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

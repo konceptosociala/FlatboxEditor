@@ -2,10 +2,12 @@ pub mod editor;
 pub mod logger;
 
 
-use std::ffi::{CStr, c_char};
+use std::ffi::{c_char, c_void, CStr};
 
 pub use logger::*;
 pub use editor::*;
+
+pub type GlInitFunctionFFI = extern fn(*const c_char) -> *const c_void;
 
 ///
 /// # Safety

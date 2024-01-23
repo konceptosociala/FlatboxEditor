@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+procout = "0.1.13"
 syn = "2.0.48"
 quote = "1.0.35"
 proc-macro2 = "1.0.76"
