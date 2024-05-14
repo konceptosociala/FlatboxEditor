@@ -1,7 +1,6 @@
 pub mod editor;
 pub mod logger;
 
-
 use std::ffi::{c_char, c_void, CStr};
 
 pub use logger::*;

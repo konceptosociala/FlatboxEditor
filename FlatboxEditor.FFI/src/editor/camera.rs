@@ -6,7 +6,7 @@ use flatbox_core::math::{
     transform::Transform, 
     glm,
 };
-use native_macro::native;
+use flatbox_native_macro::native;
 
 pub struct Camera {
     pub inner: FlatboxCamera,

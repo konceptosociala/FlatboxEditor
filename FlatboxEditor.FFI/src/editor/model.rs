@@ -1,6 +1,6 @@
 use flatbox_core::logger::debug;
 use flatbox_render::pbr::model::Model as NativeModel;
-use native_macro::native;
+use flatbox_native_macro::native;
 
 pub struct Model(pub NativeModel);
 

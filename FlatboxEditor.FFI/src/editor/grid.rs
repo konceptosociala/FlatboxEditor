@@ -1,4 +1,4 @@
-use native_macro::native;
+use flatbox_native_macro::native;
 use serde::{Serialize, Deserialize};
 use flatbox_core::{
     math::{transform::Transform, glm},
@@ -7,6 +7,7 @@ use flatbox_core::{
 use flatbox_render::{
     pbr::{
         material::Material, 
+        mesh::Mesh, 
         model::Model,
     }, 
     renderer::{
@@ -15,29 +16,59 @@ use flatbox_render::{
         Renderer, 
         DrawModelCommand,
     }, 
-    error::RenderError, hal::shader::GraphicsPipeline,
+    error::RenderError, 
+    hal::shader::GraphicsPipeline,
 };
 use flatbox_assets::typetag;
 
 use crate::NativeColor;
 
-#[derive(Default, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct Grid {
     model: Model,
     material: GridMaterial,
     transform: Transform,
 }
 
+impl Default for Grid {
+    fn default() -> Self {
+        Grid::new(10, 10, 10, NativeColor::new(253, 86, 54))
+    }
+}
+
 #[native]
 impl Grid {
-    pub fn new(_width: u32, _height: u32, _resolution: u32, _color: NativeColor) -> Grid {
-        Grid::default()
+    pub fn new(width: u32, height: u32, resolution: u32, color: NativeColor) -> Grid {
+        let step_x = width as f32 / resolution as f32;
+        let step_y = height as f32 / resolution as f32;
+
+        let mut mesh = Mesh::empty();
+
+        for x in 0..resolution {
+            for y in 0..resolution {
+                
+            }
+        }
+
+        Grid {
+            model: Model::new(mesh),
+            material: GridMaterial::new(color),
+            transform: Transform::identity(),
+        }
     }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GridMaterial {
     pub color: glm::Vec3,
+}
+
+impl GridMaterial {
+    pub fn new(color: NativeColor) -> GridMaterial {
+        GridMaterial {
+            color: color.into()
+        }
+    }
 }
 
 impl Default for GridMaterial {
@@ -57,7 +88,7 @@ impl Material for GridMaterial {
     }
 
     fn setup_pipeline(&self, pipeline: &GraphicsPipeline) {
-        pipeline.set_vec3("material", &self.color);
+        pipeline.set_vec3("gridColor", &self.color);
     }
 }
 

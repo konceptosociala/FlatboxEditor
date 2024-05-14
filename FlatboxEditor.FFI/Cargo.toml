@@ -1,6 +1,5 @@
-workspace = { members = ["native_macro"] }
 [package]
-name = "native"
+name = "flatbox_native"
 version = "0.1.0"
 edition = "2021"
 
@@ -11,7 +10,7 @@ flatbox_core = { path = "../../flatbox/crates/core" }
 gl = "0.14.0"
 serde = { version = "1.0.188", features = ["derive", "rc"] }
 
-native_macro = { path = "native_macro" }
+flatbox_native_macro = { path = "native_macro" }
 
 [lib]
 name = "native"

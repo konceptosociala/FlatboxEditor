@@ -1,6 +1,6 @@
 use std::ffi::c_char;
 use flatbox_core::logger::{FlatboxLogger, warn, info, error, debug};
-use native_macro::native;
+use flatbox_native_macro::native;
 
 pub struct Logger;
 

@@ -97,7 +97,7 @@ pub(crate) fn get_ffi_transform(
 }
 
 pub(crate) fn get_crate_name() -> TokenStream2 {
-    let found_crate = crate_name("native").expect("No such crate `native`");
+    let found_crate = crate_name("flatbox_native").expect("No such crate `native`");
 
     match found_crate {
         Itself => quote!(crate),

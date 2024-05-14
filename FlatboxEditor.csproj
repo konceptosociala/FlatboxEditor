@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <TrimMode>copyused</TrimMode>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -10,15 +12,27 @@
     <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
+  <ItemGroup>
+		<TrimmableAssembly Include="Avalonia.Themes.Fluent" />
+		<TrimmableAssembly Include="Avalonia.Themes.Default" />
+	</ItemGroup>
 
   <ItemGroup>
     <AvaloniaResource Include="Assets/**" />
-    <PackageReference Include="Avalonia" Version="11.0.2" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.2" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.2" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.2" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.2" />
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.2" />
-    <!-- <PackageReference Include="GlmSharp" Version="0.9.8" /> -->
+    <PackageReference Include="Avalonia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />		
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Avalonia.Markup.Declarative">
+      <HintPath>libs\Avalonia.Markup.Declarative.dll</HintPath>
+    </Reference>
+    <Reference Include="Avalonia.Markup.Declarative.SourceGenerator">
+      <HintPath>libs\Avalonia.Markup.Declarative.SourceGenerator.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

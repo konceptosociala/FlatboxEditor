@@ -2,7 +2,7 @@ use std::ffi::c_char;
 use flatbox_core::{logger::{error, debug}, math::transform::Transform};
 use flatbox_assets::{ron, scene::{Scene as NativeScene, SerializableEntity}, entity};
 use flatbox_render::{pbr::{material::DefaultMaterial, texture::Texture}, include_texture};
-use native_macro::native;
+use flatbox_native_macro::native;
 
 use crate::Model;
 
@@ -47,7 +47,7 @@ impl Scene {
         debug!("Scene::add_model()");
     }
 
-    pub fn scene_save(scene: &Scene, path: &str) {
+    pub fn save(scene: &Scene, path: &str) {
         let scene = match ron::ser::to_string_pretty(
             &scene.0,
             ron::ser::PrettyConfig::default()

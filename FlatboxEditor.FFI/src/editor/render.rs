@@ -10,7 +10,7 @@ use flatbox_render::{
         model::Model
     },
 };
-use native_macro::native;
+use flatbox_native_macro::native;
 
 use crate::{Camera, DrawGridCommand, Grid, GridMaterial, Scene};
 use crate::GlInitFunctionFFI;

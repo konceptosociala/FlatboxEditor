@@ -21,6 +21,12 @@ pub struct NativeColor {
     pub b: u8,
 }
 
+impl NativeColor {
+    pub fn new(r: u8, g: u8, b: u8) -> NativeColor {
+        NativeColor { r, g, b }
+    }
+}
+
 impl From<NativeColor> for glm::Vec3 {
     fn from(color: NativeColor) -> Self {
         glm::vec3(
