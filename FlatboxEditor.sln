@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatboxEditor", "FlatboxEditor.csproj", "{887D1E41-C6EA-46EF-AED5-4E71132B9337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatboxEditor", "FlatboxEditor.csproj", "{16BACC38-2776-47B8-AB1F-382B3A93E58C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{887D1E41-C6EA-46EF-AED5-4E71132B9337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{887D1E41-C6EA-46EF-AED5-4E71132B9337}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{887D1E41-C6EA-46EF-AED5-4E71132B9337}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{887D1E41-C6EA-46EF-AED5-4E71132B9337}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E109998D-9651-4B44-B677-4BB6453077F3}
+		SolutionGuid = {3D6FE039-E679-4164-85A3-770F5B4FD1F2}
 	EndGlobalSection
 EndGlobal
