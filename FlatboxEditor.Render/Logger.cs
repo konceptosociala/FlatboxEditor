@@ -5,26 +5,26 @@ using FlatboxEditor.FFI;
 
 namespace FlatboxEditor.Render;
 
-public class Logger
+public static class Logger
 {
-    public Logger()
+    static Logger()
     {
         Native.logger_init();
     }
 
-    public void Info(string msg) {
+    public static void Info(string msg) {
         Native.logger_info(msg);
     }
 
-    public void Warn(string msg) {
+    public static void Warn(string msg) {
         Native.logger_warn(msg);
     }
 
-    public void Error(string msg) {
+    public static void Error(string msg) {
         Native.logger_error(msg);
     }
 
-    public void Debug(string msg) {
+    public static void Debug(string msg) {
         Native.logger_debug(msg);
     }
 }

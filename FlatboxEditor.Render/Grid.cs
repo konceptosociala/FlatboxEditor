@@ -25,15 +25,15 @@ internal class GridHandle : SafeHandle
 
 public class Grid : IDisposable
 {
-    internal readonly GridHandle grid;
+    internal readonly GridHandle _grid;
 
     public Grid(uint width, uint height, uint resolution, Color color)
     {
-        grid = Native.grid_new(width, height, resolution, color);
+        _grid = Native.grid_new(width, height, resolution, color);
     }
 
     public void Dispose()
     {
-        grid.Dispose();
+        _grid.Dispose();
     }
 }

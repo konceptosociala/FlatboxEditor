@@ -26,44 +26,40 @@ internal class RendererHandle : SafeHandle
 
 public class Renderer : IDisposable
 {
-    private readonly RendererHandle renderer;
+    private readonly RendererHandle _renderer;
 
     public Renderer(GlInterface gl)
     {
-        Native.CallbackDelegate initGlFunction = (string glFunctionName) => {
-            return gl.GetProcAddress(glFunctionName);
-        };
-
-        renderer = Native.renderer_init(initGlFunction);
+        _renderer = Native.renderer_init(gl.GetProcAddress);
     }
 
     public void RenderScene(Scene scene) 
     {
-        Native.renderer_render_scene(renderer, scene.scene);
+        Native.renderer_render_scene(_renderer, scene.scene);
     }
 
     public void RenderGrid(Grid grid)
     {
-        Native.renderer_render_grid(renderer, grid.grid);
+        Native.renderer_render_grid(_renderer, grid._grid);
     }
 
     public void BindCamera(Camera camera)
     {
-        Native.renderer_bind_camera(renderer, camera.camera);
+        Native.renderer_bind_camera(_renderer, camera._camera);
     }
 
     public void BindCameraGrid(Camera camera)
     {
-        Native.renderer_bind_camera_grid(renderer, camera.camera);
+        Native.renderer_bind_camera_grid(_renderer, camera._camera);
     }
 
     public void Clear(float r, float g, float b) 
     {
-        Native.renderer_clear(renderer, r, g, b);
+        Native.renderer_clear(_renderer, r, g, b);
     }
 
     public void Dispose()
     {
-        renderer.Dispose();
+        _renderer.Dispose();
     }
 }

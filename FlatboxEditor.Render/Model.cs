@@ -32,11 +32,11 @@ public class Model : IDisposable
         Sphere,
     }
 
-    internal readonly ModelHandle model;
+    internal readonly ModelHandle _model;
 
     public Model(MeshType type)
     {
-        model = type switch {
+        _model = type switch {
             MeshType.Cube => Native.model_cube(),
             _ => throw new Exception("Non cube models are not supported yet"),
         };
@@ -48,6 +48,6 @@ public class Model : IDisposable
 
     public void Dispose()
     {
-        model.Dispose();
+        _model.Dispose();
     }
 }

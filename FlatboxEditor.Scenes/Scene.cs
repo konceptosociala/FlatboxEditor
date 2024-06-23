@@ -39,7 +39,7 @@ public class Scene : IDisposable
     }
 
     public void AddModel(Model model) {
-        Native.scene_add_model(scene, model.model);
+        Native.scene_add_model(scene, model._model);
     }
 
     public void Save(string path)

@@ -1,8 +1,7 @@
+#pragma warning disable CS8600
+
 using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using FlatboxEditor.MVVM.ViewModels;
-using FlatboxEditor.MVVM.Views;
 
 namespace FlatboxEditor;
 
@@ -13,16 +12,16 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public static T? GetResource<T>(object key)
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (Application.Current!.TryGetResource(key, Application.Current!.ActualThemeVariant, out object resource))
         {
-            desktop.MainWindow = new MainWindow
+            if (resource is T)
             {
-                DataContext = new MainWindowViewModel(),
-            };
+                return (T) resource;
+            }
         }
 
-        base.OnFrameworkInitializationCompleted();
+        return default;
     }
 }

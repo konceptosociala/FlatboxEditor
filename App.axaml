@@ -4,11 +4,7 @@
     x:Class="FlatboxEditor.App"
     xmlns:local="using:FlatboxEditor"
     RequestedThemeVariant="Dark"
->
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
-  
+>  
     <Application.Styles>
         <FluentTheme>
             <FluentTheme.Palettes>

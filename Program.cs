@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.ReactiveUI;
-using Avalonia.Themes.Fluent;
 using Avalonia.Markup.Declarative;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using FlatboxEditor.UI.View;
+using FlatboxEditor.UI.Data;
 
 namespace FlatboxEditor;
 
@@ -13,13 +15,29 @@ class Program
     public static void Main(string[] args) {
         var lifetime = new ClassicDesktopStyleApplicationLifetime { Args = args, ShutdownMode = ShutdownMode.OnLastWindowClose };
 
-        AppBuilder.Configure<Application>()
+        AppBuilder.Configure<App>()
             .UsePlatformDetect()
-            .AfterSetup(b => b.Instance?.Styles.Add(new FluentTheme()))
+            .UseServiceProvider(
+                new ServiceCollection()
+                    .AddSingleton<EditorData>()
+                    .BuildServiceProvider()
+            )
             .SetupWithLifetime(lifetime);
 
         lifetime.MainWindow = new Window()
-            .Title("Flatbox Editor");
+            .Title("Flatbox Editor")
+            .Width(800)
+            .Height(450)
+            .WindowState(WindowState.Maximized)
+            .Icon(new WindowIcon(new Bitmap(
+                AssetLoader.Open(new Uri("avares://FlatboxEditor/Assets/icons/favicon.ico"))
+            )))
+            .Content(new EditorView());
+
+        #if DEBUG
+        lifetime.MainWindow.AttachDevTools();
+        #endif
+
+        lifetime.Start(args);
     }
 }
-

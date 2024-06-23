@@ -25,15 +25,15 @@ internal class CameraHandle : SafeHandle
 
 public class Camera : IDisposable
 {
-    internal readonly CameraHandle camera;
+    internal readonly CameraHandle _camera;
 
     public Camera()
     {
-        camera = Native.camera_new();
+        _camera = Native.camera_new();
     }
 
     public void Dispose()
     {
-        camera.Dispose();
+        _camera.Dispose();
     }
 }

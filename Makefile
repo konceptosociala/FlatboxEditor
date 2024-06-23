@@ -7,12 +7,17 @@ endif
 FFI = target/debug/libnative.$(EXT)
 DESTDIR = /usr/bin/
 
-all : clean build
+all: clean buildRelease
 
 build:
 	mkdir build -p
 	cd FlatboxEditor.FFI/ && cargo build && cp $(FFI) ../build/
 	dotnet build -o build/
+
+buildRelease:
+	mkdir build -p
+	cd FlatboxEditor.FFI/ && cargo build && cp $(FFI) ../build/
+	dotnet build -o build/ --configuration Release
 
 run: build
 	./build/FlatboxEditor
@@ -24,3 +29,8 @@ clean:
 
 purge: clean
 	cd FlatboxEditor.FFI/ && cargo clean
+
+cls:
+	clear
+
+debug: cls clean build run

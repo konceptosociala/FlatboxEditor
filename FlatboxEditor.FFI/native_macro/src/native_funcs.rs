@@ -5,7 +5,7 @@ use syn::{
     token::Comma
 };
 use syn::{parse_quote, FnArg, Pat, ReturnType, Type, TypePath};
-use to_snake_case::ToSnakeCase;
+use case::CaseExt;
 use proc_macro_crate::{crate_name, FoundCrate::*};
 use crate::func_type::{is_primitive, FuncType};
 
@@ -115,7 +115,7 @@ pub(crate) fn get_func_ident(func_ident: &Ident, struct_ident: &TypePath) -> Ide
         panic!("Native struct name `{struct_ident}` is invalid!");
     }
 
-    Ident::new(format!("{}_{}", struct_ident.to_snake_case(), func_ident).as_str(), Span::call_site())
+    Ident::new(format!("{}_{}", struct_ident.to_snake(), func_ident).as_str(), Span::call_site())
 }
 
 pub(crate) fn get_inner_func_params(fn_args: &Punctuated<FnArg, Comma>) -> Punctuated<Box<Pat>, Comma> {
