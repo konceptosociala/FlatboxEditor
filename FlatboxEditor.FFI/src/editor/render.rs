@@ -1,21 +1,22 @@
 use flatbox_core::{
-    math::transform::Transform, 
-    catch::CatchError, logger::debug,
+    math::transform::Transform as NativeTransform, 
+    catch::CatchError,
 };
 use flatbox_render::{
     macros::c_string,
     renderer::{Renderer as NativeRenderer, ClearCommand, RenderCameraCommand, PrepareModelCommand, DrawModelCommand}, 
     pbr::{
         material::DefaultMaterial, 
-        model::Model
+        model::Model as NativeModel,
+        camera::Camera as NativeCamera,
     },
 };
 use flatbox_native_macro::native;
 
-use crate::{Camera, DrawGridCommand, Grid, GridMaterial, Scene};
+use crate::{is_shared_type, shared_mut, shared_ref, Camera, DrawGridCommand, Grid, GridMaterial, Scene, ToNative};
 use crate::GlInitFunctionFFI;
 
-pub struct Renderer(pub NativeRenderer);
+pub struct Renderer(NativeRenderer);
 
 #[native]
 impl Renderer {
@@ -28,59 +29,63 @@ impl Renderer {
         renderer.bind_material::<DefaultMaterial>();
         renderer.bind_material::<GridMaterial>();
 
-        debug!("Renderer::init()");
         Renderer(renderer)
     }
 
     pub fn render_scene(renderer: &mut Renderer, scene: &mut Scene) {
-        for entity in &mut scene.0.entities {
+        for entity in &mut scene.native_scene().lock().entities {
             let mut model = None;
             let mut material = None;
             let mut transform = None;
     
             for component in &entity.components {
-                if component.lock().as_any_mut().downcast_mut::<Model>().is_some() { model = Some(component.clone()) }
-                if component.lock().as_any().downcast_ref::<DefaultMaterial>().is_some() { material = Some(component.clone()) }
-                if component.lock().as_any().downcast_ref::<Transform>().is_some() { transform = Some(component.clone()) }
+                if is_shared_type!(component => NativeModel) { 
+                    model = Some(component.clone());
+                }
+
+                if is_shared_type!(component => DefaultMaterial) { 
+                    material = Some(component.clone());
+                }
+
+                if is_shared_type!(component => NativeTransform) {
+                    transform = Some(component.clone());
+                }
             }
     
-            if let (Some(model), Some(material), Some(transform)) = (model, material, transform) {
-                let mut model = model.lock();
-                let material = material.lock();
-                let transform = transform.lock();
-    
+            if let (Some(model), Some(material), Some(transform)) = (model, material, transform) {    
                 renderer.0.execute(&mut PrepareModelCommand::new(
-                    model.as_any_mut().downcast_mut::<Model>().unwrap(), 
-                    material.as_any().downcast_ref::<DefaultMaterial>().unwrap(),
+                    shared_mut!(model => NativeModel), 
+                    shared_ref!(material => DefaultMaterial),
                 )).catch();
     
                 renderer.0.execute(&mut DrawModelCommand::new(
-                    model.as_any().downcast_ref::<Model>().unwrap(), 
-                    material.as_any().downcast_ref::<DefaultMaterial>().unwrap(), 
-                    transform.as_any().downcast_ref::<Transform>().unwrap(),
+                    shared_ref!(model => NativeModel),
+                    shared_ref!(material => DefaultMaterial), 
+                    shared_ref!(transform => NativeTransform),
                 )).catch();
             }
         }
-        debug!("Renderer::render_scene()");
     }
 
     pub fn render_grid(renderer: &mut Renderer, grid: &mut Grid) {
         renderer.0.execute(&mut DrawGridCommand::new(grid)).catch();
-        debug!("Renderer::render_grid()");
     }
 
     pub fn bind_camera(renderer: &mut Renderer, camera: &mut Camera) {    
-        renderer.0.execute(&mut RenderCameraCommand::<DefaultMaterial>::new(&mut camera.inner, &camera.transform)).catch();
-        debug!("Renderer::bind_camera()");
+        renderer.0.execute(&mut RenderCameraCommand::<DefaultMaterial>::new(
+            shared_mut!(camera.native() => NativeCamera), 
+            shared_ref!(camera.transform().native() => NativeTransform),
+        )).catch();
     }
 
     pub fn bind_camera_grid(renderer: &mut Renderer, camera: &mut Camera) {    
-        renderer.0.execute(&mut RenderCameraCommand::<GridMaterial>::new(&mut camera.inner, &camera.transform)).catch();
-        debug!("Renderer::bind_camera_grid()");
+        renderer.0.execute(&mut RenderCameraCommand::<GridMaterial>::new(
+            shared_mut!(camera.native() => NativeCamera), 
+            shared_ref!(camera.transform().native() => NativeTransform),
+        )).catch();
     }
 
     pub fn clear(renderer: &mut Renderer, r: f32, g: f32, b: f32){
         renderer.0.execute(&mut ClearCommand(r, g, b)).catch();
-        debug!("Renderer::clear()");
     }
 }

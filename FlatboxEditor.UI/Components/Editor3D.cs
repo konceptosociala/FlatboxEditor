@@ -22,10 +22,10 @@ public class Editor3D : OpenGlControlBase
         base.OnOpenGlInit(gl);
 
         _renderer = new Renderer(gl);
-        _camera = new Camera();
+        _camera = new Camera(Transform.Debug());
         _scene = new Scene();
-        _grid = new Grid(20, 20, 10, Color.Orange());
-        _scene.AddModel(Model.Cube());
+        _grid = new Grid(20, 20, 10, Color.ORANGE);
+        _scene.AddModel(Model.Cube(Transform.Identity(), Material.Debug()));
 
         init = true;
     }

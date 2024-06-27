@@ -34,3 +34,6 @@ cls:
 	clear
 
 debug: cls clean build run
+
+doc:
+	cd FlatboxEditor.FFI/ && cargo doc --open --no-deps

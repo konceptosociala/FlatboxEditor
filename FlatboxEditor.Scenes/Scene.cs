@@ -1,6 +1,4 @@
-using System;
 using System.Runtime.InteropServices;
-using Avalonia.OpenGL;
 using FlatboxEditor.FFI;
 using FlatboxEditor.Render;
 
@@ -10,14 +8,16 @@ internal class SceneHandle : SafeHandle
 {
     public SceneHandle() : base(IntPtr.Zero, true) {}
 
-    public override bool IsInvalid {
+    public override bool IsInvalid 
+    {
         get { return handle == IntPtr.Zero; }
     }
 
     protected override bool ReleaseHandle()
     {
-        if (!IsInvalid) {
-            Native.scene_free(handle);
+        if (!IsInvalid) 
+        {
+            NativeInterface.scene_free(handle);
         }
 
         return true;
@@ -26,29 +26,31 @@ internal class SceneHandle : SafeHandle
 
 public class Scene : IDisposable
 {
-    internal readonly SceneHandle scene;
+    internal readonly SceneHandle _scene;
 
     public Scene()
     {
-        scene = Native.scene_new();
+        _scene = NativeInterface.scene_new();
     }
 
     public Scene(string path)
     {
-        scene = Native.scene_open(path);
+        _scene = NativeInterface.scene_open(path);
     }
 
     public void AddModel(Model model) {
-        Native.scene_add_model(scene, model._model);
+        NativeInterface.scene_add_model(_scene, model.Native());
     }
 
     public void Save(string path)
     {
-        Native.scene_save(scene, path);
+        NativeInterface.scene_save(_scene, path);
     }
 
     public void Dispose()
     {
-        scene.Dispose();
+        _scene.Dispose();
     }
+
+    internal SceneHandle Native() => _scene;
 }

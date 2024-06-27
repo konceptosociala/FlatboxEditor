@@ -1,8 +1,7 @@
 use flatbox_native_macro::native;
 use serde::{Serialize, Deserialize};
 use flatbox_core::{
-    math::{transform::Transform, glm},
-    catch::CatchError,
+    catch::CatchError, math::{glm, transform::Transform}
 };
 use flatbox_render::{
     pbr::{
@@ -44,8 +43,8 @@ impl Grid {
 
         let mut mesh = Mesh::empty();
 
-        for x in 0..resolution {
-            for y in 0..resolution {
+        for x in 0..=resolution {
+            for y in 0..=resolution {
                 
             }
         }

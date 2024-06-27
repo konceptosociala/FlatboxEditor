@@ -8,7 +8,6 @@ pub struct Logger;
 impl Logger {
     pub fn init() {
         FlatboxLogger::init();
-        debug!("Logger::init()");
     }
 
     pub fn info(msg: &str) {

@@ -1,23 +1,26 @@
-use std::ffi::c_char;
-use flatbox_core::{logger::{error, debug}, math::transform::Transform};
-use flatbox_assets::{ron, scene::{Scene as NativeScene, SerializableEntity}, entity};
-use flatbox_render::{pbr::{material::DefaultMaterial, texture::Texture}, include_texture};
+use std::{ffi::c_char, sync::Arc};
+use flatbox_core::logger::error;
+use flatbox_assets::{
+    parking_lot::Mutex, ron, scene::{Scene as NativeScene, SerializableEntity}};
 use flatbox_native_macro::native;
 
-use crate::Model;
+use crate::{Model, SharedNativeScene, ToNative};
 
-#[derive(Default)]
-pub struct Scene(pub NativeScene);
+pub struct Scene(SharedNativeScene);
+
+impl Default for Scene {
+    fn default() -> Self {
+        Scene(Arc::new(Mutex::new(NativeScene::default())))
+    }
+}
 
 #[native]
 impl Scene {
     pub fn new() -> Scene {
-        debug!("Scene::new()");
         Scene::default()
     }
 
     pub fn open(path: &str) -> Scene {
-        debug!("Scene::open()");
         match std::fs::read_to_string(path) {
             Ok(ser) => match ron::from_str(&ser) {
                 Ok(scene) => Scene(scene),
@@ -34,17 +37,15 @@ impl Scene {
     }
 
     pub fn add_model(scene: &mut Scene, model: &Model) {    
-        scene.0.entities.push(entity![
-            Transform::identity(),
-            DefaultMaterial {
-                diffuse_map: include_texture!("../assets/textures/dev.png"),
-                specular_map: Texture::default(),
-                ..Default::default()
-            },
-            model.0.clone()
-        ]);
-    
-        debug!("Scene::add_model()");
+        scene.0.lock().entities.push(
+            SerializableEntity {
+                components: vec![
+                    model.native(),
+                    Model::transform(model).native(),
+                    Model::material(model).native(),
+                ]
+            }
+        );    
     }
 
     pub fn save(scene: &Scene, path: &str) {
@@ -62,7 +63,11 @@ impl Scene {
         if let Err(e) = std::fs::write(path, scene) {
             error!("Cannot save scene: {}", e);
         }
+    }
+}
 
-        debug!("Scene::save()");
+impl Scene {
+    pub fn native_scene(&self) -> SharedNativeScene {
+        Arc::clone(&self.0)
     }
 }

@@ -5,12 +5,24 @@ using FlatboxEditor.Scenes;
 
 namespace FlatboxEditor.FFI;
 
-internal class Native 
+internal class NativeInterface
 {
     public const string LibPath = "libnative";
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate IntPtr CallbackDelegate(string glFunctionName);
+
+    [DllImport(LibPath)]
+    internal static extern MaterialHandle material_debug();
+    [DllImport(LibPath)]
+    internal static extern void material_free(IntPtr material);
+
+    [DllImport(LibPath)]
+    internal static extern TransformHandle transform_identity();
+    [DllImport(LibPath)]
+    internal static extern TransformHandle transform_debug();
+    [DllImport(LibPath)]
+    internal static extern void transform_free(IntPtr transform);
 
     [DllImport(LibPath)]
     internal static extern RendererHandle renderer_init(CallbackDelegate initGlFunction);
@@ -39,7 +51,7 @@ internal class Native
     internal static extern void scene_free(IntPtr scene);
 
     [DllImport(LibPath)]
-    internal static extern CameraHandle camera_new();
+    internal static extern CameraHandle camera_new(TransformHandle transform);
     [DllImport(LibPath)]
     internal static extern void camera_free(IntPtr renderer);
 
@@ -55,7 +67,7 @@ internal class Native
     internal static extern void logger_debug(string msg);
 
     [DllImport(LibPath)]
-    internal static extern ModelHandle model_cube();
+    internal static extern ModelHandle model_cube(TransformHandle transform, MaterialHandle material);
     [DllImport(LibPath)]
     internal static extern void model_free(IntPtr model);
 

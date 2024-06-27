@@ -1,6 +1,4 @@
-using System;
 using System.Runtime.InteropServices;
-using Avalonia.OpenGL;
 using FlatboxEditor.FFI;
 
 namespace FlatboxEditor.Render;
@@ -9,31 +7,36 @@ internal class CameraHandle : SafeHandle
 {
     public CameraHandle() : base(IntPtr.Zero, true) {}
 
-    public override bool IsInvalid {
+    public override bool IsInvalid 
+    {
         get { return handle == IntPtr.Zero; }
     }
 
     protected override bool ReleaseHandle()
     {
-        if (!IsInvalid) {
-            Native.camera_free(handle);
+        if (!IsInvalid) 
+        {
+            NativeInterface.camera_free(handle);
         }
 
         return true;
     }
 }
 
-public class Camera : IDisposable
+public class Camera(Transform transform) : IDisposable
 {
-    internal readonly CameraHandle _camera;
+    private readonly CameraHandle _camera = NativeInterface.camera_new(transform.Native());
+    private Transform _transform = transform;
 
-    public Camera()
+    public Transform Transform 
     {
-        _camera = Native.camera_new();
+        get => _transform;
     }
 
     public void Dispose()
     {
         _camera.Dispose();
     }
+
+    internal CameraHandle Native() => _camera;
 }

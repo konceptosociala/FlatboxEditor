@@ -9,14 +9,16 @@ internal class ModelHandle : SafeHandle
 {
     public ModelHandle() : base(IntPtr.Zero, true) {}
 
-    public override bool IsInvalid {
+    public override bool IsInvalid 
+    {
         get { return handle == IntPtr.Zero; }
     }
 
     protected override bool ReleaseHandle()
     {
-        if (!IsInvalid) {
-            Native.model_free(handle);
+        if (!IsInvalid) 
+        {
+            NativeInterface.model_free(handle);
         }
 
         return true;
@@ -25,29 +27,42 @@ internal class ModelHandle : SafeHandle
 
 public class Model : IDisposable
 {
-    public enum MeshType {
-        Plane,
-        Cube,
-        Icosahedron,
-        Sphere,
-    }
+    private ModelHandle _model;
 
-    internal readonly ModelHandle _model;
+    private Transform _transform;
+    private Material _material;
 
-    public Model(MeshType type)
+    // public Model(string modelPath, Transform transform, Material material)
+    // {
+    // ...
+    // }
+
+    private Model(ModelHandle model, Transform transform, Material material) 
     {
-        _model = type switch {
-            MeshType.Cube => Native.model_cube(),
-            _ => throw new Exception("Non cube models are not supported yet"),
-        };
+        _model = model;
+        _transform = transform;
+        _material = material;
     }
 
-    public static Model Cube() {
-        return new Model(MeshType.Cube);
+    public static Model Cube(Transform transform, Material material) 
+    {
+        return new Model(NativeInterface.model_cube(transform.Native(), material.Native()), transform, material);
+    }
+
+    public Transform Transform
+    {
+        get => _transform;
+    }
+
+    public Material Material
+    {
+        get => _material;
     }
 
     public void Dispose()
     {
         _model.Dispose();
     }
+
+    internal ModelHandle Native() => _model;
 }

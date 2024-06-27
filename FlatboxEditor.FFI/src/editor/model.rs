@@ -1,14 +1,48 @@
-use flatbox_core::logger::debug;
 use flatbox_render::pbr::model::Model as NativeModel;
 use flatbox_native_macro::native;
 
-pub struct Model(pub NativeModel);
+use crate::{shared, Material, SharedNativeComponent, ToNative, Transform};
+
+pub struct Model {
+    model: SharedNativeComponent,
+    material: Material,
+    transform: Transform,
+}
 
 #[native]
 impl Model {
-    pub fn cube() -> Model {
-        debug!("Model::cube()");
-        Model(NativeModel::cube())
+    pub fn cube(transform: &Transform, material: &Material) -> Model {
+        Model {
+            model: shared!(NativeModel::cube()),
+            material: material.clone(),
+            transform: transform.clone(),
+        }
+    }
+}
+
+impl Model {
+    pub fn transform(&self) -> Transform {
+        self.transform.clone()
+    }
+
+    pub fn material(&self) -> Material {
+        self.material.clone()
+    }
+}
+
+impl ToNative for Model {
+    fn native(&self) -> SharedNativeComponent {
+        SharedNativeComponent::clone(&self.model)
+    }
+}
+
+impl Clone for Model {
+    fn clone(&self) -> Self {
+        Model {
+            model: SharedNativeComponent::clone(&self.model),
+            material: self.material.clone(),
+            transform: self.transform.clone(),
+        }
     }
 }
 
@@ -25,13 +59,4 @@ impl Model {
 // #[no_mangle]
 // pub extern "C" fn model_sphere() -> *mut Model {
 //     Box::into_raw(Box::new(Model::sphere()))
-// }
-
-// ///
-// /// # Safety
-// /// `model` must be a valid `Model` pointer
-// #[no_mangle]
-// pub unsafe extern "C" fn model_free(model: *mut NativeModel) {
-//     free_ptr(model);
-//     debug!("Model::free()");
 // }

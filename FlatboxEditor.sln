@@ -6,20 +6,20 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlatboxEditor", "FlatboxEditor.csproj", "{16BACC38-2776-47B8-AB1F-382B3A93E58C}"
 EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16BACC38-2776-47B8-AB1F-382B3A93E58C}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3D6FE039-E679-4164-85A3-770F5B4FD1F2}
-	EndGlobalSection
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {16BACC38-2776-47B8-AB1F-382B3A93E58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {16BACC38-2776-47B8-AB1F-382B3A93E58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {16BACC38-2776-47B8-AB1F-382B3A93E58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {16BACC38-2776-47B8-AB1F-382B3A93E58C}.Release|Any CPU.Build.0 = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(SolutionProperties) = preSolution
+        HideSolutionNode = FALSE
+    EndGlobalSection
+    GlobalSection(ExtensibilityGlobals) = postSolution
+        SolutionGuid = {3D6FE039-E679-4164-85A3-770F5B4FD1F2}
+    EndGlobalSection
 EndGlobal
